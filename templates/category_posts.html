@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} Posts{% endblock %}
+
+{% block content %}
+<header>
+    <h1>Posts in {{ category.name }}</h1>
+</header>
+
+<main>
+    {% if posts %}
+        <div class="list-group">
+                {% for post in posts %}
+                    <a href="{% url 'post_detail' post.id %}" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">{{ post.title }}</h5>
+                        <small>Od {{ post.author.username }} v {{ post.created_at|date:"F j, Y" }}</small>
+                        <p class="mb-1">{{ post.content|truncatewords:30 }}</p>
+                        <p>{{ post.excerpt }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+    {% else %}
+        <p>No posts available in this category.</p>
+    {% endif %}
+</main>
+{% endblock %}
